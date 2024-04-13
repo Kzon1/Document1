@@ -32,7 +32,7 @@ const CartPage = () => {
     }
   };
   const addPaypalScript = async () => {
-    let data = await axios.get("/payment/config");
+    let data = await axios.get("http://localhost:3001/payment/config");
     let script = document.createElement("script");
     script.type = "text/javascript";
     script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
@@ -94,6 +94,8 @@ const CartPage = () => {
     //   console.error("Error creating order:", error);
     // }
   };
+
+  
   //handle payments
   const handlePayment = async () => {
     try {

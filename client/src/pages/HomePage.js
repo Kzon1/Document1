@@ -9,6 +9,10 @@ import { useCart } from "../context/cart";
 import "../styles/Homepage.css";
 import Layout from "./../components/Layout/Layout";
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3001", // Replace '3001' with your custom port
+});
+
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -19,6 +23,7 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
 
   //get all cat
   const getAllCategory = async () => {
@@ -40,7 +45,7 @@ const HomePage = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axiosInstance.get(`/api/v1/product/product-list/${page}`);
       setLoading(false);
       setProducts(data.products);
     } catch (error) {
@@ -62,6 +67,7 @@ const HomePage = () => {
   useEffect(() => {
     if (page === 1) return;
     loadMore();
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   //load more

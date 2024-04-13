@@ -15,9 +15,9 @@ import orderRoutes from "./routes/orderRoutes.js";
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id:
-    "AclsyktkK-QOw-GHnMtuC0E1o2j-GcwgkjCe28yVu2VweLCsuv6HVXeiOAhVyyw7KgFl0CAyEraeAQK3",
+    process.env.PAYPAL_CLIENT_ID,
   client_secret:
-    "EOgtfaIPJGF8PwR1Ui-9x2vtuNAUkTOMC-VlZsZ86-3W6s3iMQFNbGWc9bKucphPK3eRG_09_9GEc9X1",
+    process.env.PAYPAL_SECRET,
 });
 //configure env
 dotenv.config();
@@ -49,7 +49,7 @@ app.use("*", function (req, res) {
 });
 
 //PORT
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 //run listen
 app.listen(PORT, () => {
