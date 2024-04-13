@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:3001", // Replace '3001' with your custom port
 });
 
+
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();

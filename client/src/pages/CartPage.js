@@ -33,6 +33,7 @@ const CartPage = () => {
   };
   const addPaypalScript = async () => {
     let data = await axios.get("http://localhost:3001/payment/config");
+    console.log("dataPaypal",data);
     let script = document.createElement("script");
     script.type = "text/javascript";
     script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
@@ -58,19 +59,8 @@ const CartPage = () => {
     }
   };
 
-  //get payment gateway token
-  const getToken = async () => {
-    try {
-      const { data } = await axios.get("/api/v1/product/braintree/token");
-      setClientToken(data?.clientToken);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    getToken();
-
+    
     if (!window.paypal) {
       addPaypalScript();
     } else {
@@ -79,33 +69,27 @@ const CartPage = () => {
   const onSuccessPaypal = async (details, data) => {
     console.log("Payment completed successfully");
 
-    // cai nay tu lam
-    // try {
-    //   const response = await axios.post("/api/create-order", {
-    //     // Include necessary order details here
-    //   });
-
-    //   if (response.status === 200) {
-    //     console.log("Order created successfully");
-    //   } else {
-    //     console.log("Failed to create order");
-    //   }
-    // } catch (error) {
-    //   console.error("Error creating order:", error);
-    // }
+    try {
+      const response = await axios.post("/api/create-order", {
+        orderID: data.orderID,
+        // Include other necessary details here
+      });
+  
+      if (response.status === 200) {
+        console.log("Payment processed successfully");
+      } else {
+        console.log("Failed to process payment");
+      }
+    } catch (error) {
+      console.error("Error processing payment:", error);
+    }
   };
 
-  
+
   //handle payments
   const handlePayment = async () => {
     try {
       setLoading(true);
-      const { nonce } = await instance.requestPaymentMethod();
-      // eslint-disable-next-line no-unused-vars
-      const { data } = await axios.post("/api/v1/product/braintree/payment", {
-        nonce,
-        cart,
-      });
       setLoading(false);
       localStorage.removeItem("cart");
       setCart([]);

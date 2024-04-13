@@ -69,7 +69,7 @@ router.get("/product-category/:slug", productCategoryController);
 router.get("/payment/config", (req, res) => {
   return res.status(200).json({
     status: "success",
-    data: process.env.CLIENT_ID,
+    data: "AXxY-2aAHyjbOTRFdhLDuxxZGJQhzBL9aJF2O3FiTAucVq8Z8YNusfjSmwxj7aNEbTahqZ0jpR_d8DQE",
   });
 });
 export default router;
